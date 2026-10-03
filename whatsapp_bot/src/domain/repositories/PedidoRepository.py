@@ -20,3 +20,7 @@ class PedidoRepository(ABC):
     @abstractmethod
     def buscar_aberto_por_cliente(self, cliente_id: str) -> Optional[Pedido]:
         ...
+
+    @abstractmethod
+    def buscar_mais_recente_por_cliente(self, cliente_id: str) -> Optional[Pedido]:
+        ...
