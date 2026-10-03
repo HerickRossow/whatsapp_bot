@@ -5,6 +5,7 @@ Você edita o Excel; este script (ou a rota /sync-produtos) atualiza o banco.
 Uso:
     python excel_sync.py            # sincroniza o arquivo configurado em config.PRODUTOS_XLSX
     python excel_sync.py --criar-exemplo   # cria um produtos.xlsx de exemplo, se não existir
+    Deletar todos os arquivos da pasta old_project
 """
 import sys
 import openpyxl
