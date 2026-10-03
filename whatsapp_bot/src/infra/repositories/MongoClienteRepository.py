@@ -1,6 +1,7 @@
 from typing import Optional
 
 from bson import ObjectId
+from bson.errors import InvalidId
 from pymongo.database import Database
 
 from ...domain.entities.Cliente import Cliente
@@ -17,7 +18,11 @@ class MongoClienteRepository(ClienteRepository):
         return self._para_entidade(documento) if documento else None
 
     def buscar_por_id(self, cliente_id: str) -> Optional[Cliente]:
-        documento = self._collection.find_one({"_id": ObjectId(cliente_id)})
+        try:
+            object_id = ObjectId(cliente_id)
+        except InvalidId:
+            return None
+        documento = self._collection.find_one({"_id": object_id})
         return self._para_entidade(documento) if documento else None
 
     def salvar(self, cliente: Cliente) -> Cliente:

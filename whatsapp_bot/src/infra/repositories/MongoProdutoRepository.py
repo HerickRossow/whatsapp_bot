@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import List, Optional
 
 from bson import ObjectId
+from bson.errors import InvalidId
 from pymongo.database import Database
 
 from ...domain.entities.Produto import Produto
@@ -15,7 +16,11 @@ class MongoProdutoRepository(ProdutoRepository):
         self._collection = database["produtos"]
 
     def buscar_por_id(self, produto_id: str) -> Optional[Produto]:
-        documento = self._collection.find_one({"_id": ObjectId(produto_id)})
+        try:
+            object_id = ObjectId(produto_id)
+        except InvalidId:
+            return None
+        documento = self._collection.find_one({"_id": object_id})
         return self._para_entidade(documento) if documento else None
 
     def buscar_por_sku(self, sku: str) -> Optional[Produto]:

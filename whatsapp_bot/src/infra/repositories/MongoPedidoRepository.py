@@ -46,6 +46,10 @@ class MongoPedidoRepository(PedidoRepository):
         )
         return self._para_entidade(documento) if documento else None
 
+    def buscar_mais_recente_por_cliente(self, cliente_id: str) -> Optional[Pedido]:
+        documento = self._collection.find_one({"cliente_id": cliente_id}, sort=[("_id", -1)])
+        return self._para_entidade(documento) if documento else None
+
     @staticmethod
     def _para_documento(pedido: Pedido) -> dict:
         return {
