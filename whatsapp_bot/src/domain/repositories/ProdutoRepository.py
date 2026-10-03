@@ -14,5 +14,9 @@ class ProdutoRepository(ABC):
         ...
 
     @abstractmethod
+    def buscar_por_sku(self, sku: str) -> Optional[Produto]:
+        ...
+
+    @abstractmethod
     def salvar(self, produto: Produto) -> Produto:
         ...
